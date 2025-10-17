@@ -1,0 +1,54 @@
+version: 1
+
+auth:
+  scheme: x-token
+  header_name: x-token
+  token_env: AMVA_TOKEN
+
+api:
+  base_url: "https://siata.gov.co/servicios_ruido"
+  timeout_seconds: 30
+
+endpoints:
+  - name: stations
+    path: "/stations/"
+    method: GET
+    requires_params: false
+    csv:
+      enabled: true
+      file: "data/stations.csv"
+
+  - name: station_noise_data
+    path: "/stations/noise_data/{station}"
+    method: GET
+    requires_params: true
+    params:
+      - name: station
+        type: string
+        required: true
+      - name: start_date
+        type: string
+        required: true
+      - name: end_date
+        type: string
+        required: true
+    csv:
+      enabled: true
+      file: "data/station_noise_data.csv"
+
+  - name: all_stations_noise_data
+    path: "/stations/noise_data/all_stations/"
+    method: GET
+    requires_params: true
+    params:
+      - name: start_date
+        type: string
+        required: true
+      - name: end_date
+        type: string
+        required: true
+    csv:
+      enabled: true
+      file: "data/all_stations_noise_data.csv"
+
+
